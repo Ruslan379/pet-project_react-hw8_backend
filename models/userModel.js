@@ -10,6 +10,11 @@ const bcrypt = require("bcryptjs");
 const emailRegexp = /^[\w.]+@[\w]+.[\w]+$/;
 
 const userSchema = Schema({
+    name: {
+        type: String,
+        required: [true, 'Name is required'],
+        // unique: true,
+    },
     email: {
         type: String,
         required: [true, 'Email is required'],
@@ -71,6 +76,9 @@ userSchema.post("save", handleSchemaValidationErrors)
 const subscriptionList = ["starter", "pro", "business"];
 
 const registerJoiSchema = Joi.object({
+    name: Joi.string()
+        .min(2)
+        .required(),
     email: Joi.string()
         .pattern(emailRegexp)
         .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net', 'ua', 'org',] } })

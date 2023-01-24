@@ -28,7 +28,7 @@ const { sendVerificationEmailNodemailer } = require("../../helpers");
 
 //-----------------------------------------------------------------------------
 const registrationController = async (req, res) => {
-    const { email, password } = req.body;
+    const { name, email, password } = req.body;
     const userMailCheck = await User.findOne({ email });
 
     //! ПРОВЕРКА - если email уже используется кем-то другим:
@@ -58,7 +58,7 @@ const registrationController = async (req, res) => {
 
     //? 3-вариант (самый сложный)
     //!  Хеширование и засока password с помошью bcryptjs (или bcrypt) используется в userSchema
-    const newUser = new User({ email, avatarURL, verificationToken }); //* gravatar + SendGrid or Nodemailer
+    const newUser = new User({ name, email, avatarURL, verificationToken }); //* gravatar + SendGrid or Nodemailer
     await newUser.setPassword(password);
     await newUser.save();
     //! _______________________ Хеширование и засолка password _________________________
