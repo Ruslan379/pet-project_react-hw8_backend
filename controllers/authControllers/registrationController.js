@@ -26,6 +26,14 @@ const { sendVerificationEmailNodemailer } = require("../../helpers");
 //todo ___________________ Nodemailer ____________________
 
 
+const jwt = require('jsonwebtoken');
+
+const { JWT_SECRET } = process.env;
+
+const { lineBreak } = require("../../services");
+
+
+
 //-----------------------------------------------------------------------------
 const registrationController = async (req, res) => {
     const { name, email, password } = req.body;
@@ -88,20 +96,35 @@ const registrationController = async (req, res) => {
     // await sendVerificationEmailNodemailer(mail); //! отправка подтверждениия (верификации) на email пользователя
 
 
-
+    //! +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     //! Создаем ТОКЕН
+    const payload = { id: newUser._id };
 
+    const token = jwt.sign(payload, JWT_SECRET);
+    // const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "1h" }); //! Временный - 1 час
+
+    // user.token = token
+    //! Обновляем поле "token" в MongoDB --> db-contacts.users
+    const user = await User.findByIdAndUpdate(newUser._id, { token }, { new: true });
+
+    console.log("\nuser:".yellow, user); //!
+    console.log("token:".red, token.green); //!
+    console.log("");
+    //! +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
 
     res.status(201).json({
         // status: "success",
         code: 201,
-        user: {
-            email,
-            subscription: newUser.subscription,
-            avatarURL //* gravatar
-        }
+        user,
+        token,
+        // userNew: {
+        //     email,
+        //     subscription: newUser.subscription,
+        //     avatarURL, //* gravatar
+        //     // token,
+        // },
     });
 };
 

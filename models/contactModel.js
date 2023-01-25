@@ -12,6 +12,7 @@ const contactSchema = Schema({
     },
     email: {
         type: String,
+        default: "new@i.ua",
     },
     phone: {
         type: String,
@@ -41,7 +42,8 @@ const contactJoiSchemaPut = Joi.object({
 
     email: Joi.string()
         .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net', 'ua', 'org',] } })
-        .required(),
+        // .required()
+        .optional(),
 
     phone: Joi.string()
         // .alphanum()

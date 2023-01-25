@@ -1,4 +1,4 @@
-require("colors");
+// require("colors");
 const { User } = require("../../models/userModel.js");
 const { Unauthorized, BadRequest } = require("http-errors");
 
