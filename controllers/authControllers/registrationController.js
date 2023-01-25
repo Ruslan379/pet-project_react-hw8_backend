@@ -89,6 +89,8 @@ const registrationController = async (req, res) => {
 
 
 
+    //! Создаем ТОКЕН
+
 
 
 
