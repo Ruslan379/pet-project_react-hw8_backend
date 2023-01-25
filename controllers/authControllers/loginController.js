@@ -68,13 +68,14 @@ const loginController = async (req, res) => {
     res.status(200).json({
         // status: "success",
         code: 200,
-        data: {
-            token,
-            user: {
-                email,
-                subscription: user.subscription
-            }
-        }
+        user,
+        // data: {
+        //     token,
+        //     user: {
+        //         email,
+        //         subscription: user.subscription
+        //     }
+        // }
     })
 };
 
