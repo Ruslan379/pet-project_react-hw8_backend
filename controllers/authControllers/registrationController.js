@@ -69,71 +69,6 @@ const registrationController = async (req, res) => {
 
 
 
-
-
-
-    //? ------------------- SendGrid -------------------
-    const dataSendGrid = {
-        to: email,
-        // from: SENDGRID_EMAIL, // Use the email address or domain you verified above
-        subject: 'Thank you for registration with SendGrid-5!',
-        text: '...and easy to do anywhere, even with Node.js and SendGrid',
-        html: '<h1>...and easy to do anywhere, even with Node.js and SendGrid</h1>',
-    };
-    // await sendVerificationEmailSendGrid(dataSendGrid); //! отправка подтверждениия (верификации) на email пользователя
-
-    //? OLD
-    // const msg = {
-    //     to: email,
-    //     from: SENDGRID_EMAIL, //? Use the email address or domain you verified above
-    //     subject: 'Thank you for registration with SendGrid-5!',
-    //     text: '...and easy to do anywhere, even with Node.js and SendGrid',
-    //     html: '<h1>...and easy to do anywhere, even with Node.js and SendGrid</h1>',
-    // };
-    // await sgMail.send(msg);
-    // console.log("Email send using SendGrid success!".bgGreen.black);
-    // console.log("");
-    //? ___________________ SendGrid ____________________
-
-
-    //todo ------------------- Nodemailer -------------------
-    // // Объект конфигурации META:
-    // const nodemalierConfig = {
-    //     host: "smtp.meta.ua",
-    //     port: 465, // 25, 465, 2255
-    //     secure: true,
-    //     auth: {
-    //         user: META_EMAIL,
-    //         pass: META_PASSWORD,
-    //     }
-    // };
-
-    // const transporter = nodemailer.createTransport(nodemalierConfig);
-
-    const dataNodemailer = {
-        to: email,
-        // from: META_EMAIL, //? Use the email address or domain you verified above
-        // subject: 'Thank you for registration with Nodemailer-8!',
-        subject: 'Подтверждение регистрации на сайте-3',
-        // text: '...and easy to do anywhere, even with Node.js and Nodemailer',
-        // html: '<h1>...and easy to do anywhere, even with Node.js and Nodemailer</h1>',
-        html: `<a href = "http://localhost:3000/api/users/verify/${verificationToken}" target="_blank">Нажмите для подтверждения вашего EMAIL</a>`,
-    };
-
-    // await transporter.sendMail(dataNodemailer);
-    // console.log("Email send using Nodemailer success!".bgCyan.black);
-    // console.log("");
-    // // .then(() => console.log("Email send using Nodemailer success!".bgCyan.black))
-    // // .catch(error => console.log(error.message));
-
-    // await sendVerificationEmailNodemailer(dataNodemailer); //! отправка подтверждениия (верификации) на email пользователя
-    //todo ___________________ Nodemailer ____________________
-
-
-
-
-
-
     //? ------------------ SendGrid -------------------
     //todo -------------- Nodemailer ------------------
     //! Отправка письма
@@ -151,6 +86,10 @@ const registrationController = async (req, res) => {
 
     //todo -------------- Nodemailer ------------------
     // await sendVerificationEmailNodemailer(mail); //! отправка подтверждениия (верификации) на email пользователя
+
+
+
+
 
 
     res.status(201).json({
