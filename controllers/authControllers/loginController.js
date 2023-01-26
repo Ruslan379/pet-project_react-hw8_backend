@@ -69,6 +69,7 @@ const loginController = async (req, res) => {
         // status: "success",
         code: 200,
         user,
+        token,
         // data: {
         //     token,
         //     user: {
