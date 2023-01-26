@@ -31,19 +31,19 @@ const logoutController = async (req, res) => {
     //! Удаление токена
     console.log("logoutController-->user.token_ДО:".bgBlue.white, user.token);
     console.log("");
-    user.token = ""
+    user.token = null
     //! Обновляем поле "token" в MongoDB --> db-contacts.users
-    user = await User.findByIdAndUpdate(user._id, { token: "" }, { new: true });
+    user = await User.findByIdAndUpdate(user._id, { token: null }, { new: true });
     console.log("logoutController-->user.token_ПОСЛЕ:".bgBlue.red, user.token);
     console.log("");
 
-    res.status(204).json()
+    // res.status(204).json() //??
 
-    // res.status(200).json({
-    //     status: "No Content",
-    //     code: 204,
-    //     user
-    // })
+    res.status(200).json({
+        status: "Logout",
+        code: 204,
+        user
+    })
 };
 
 
