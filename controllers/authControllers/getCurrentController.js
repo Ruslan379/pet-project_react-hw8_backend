@@ -24,15 +24,16 @@ const getCurrentController = async (req, res) => {
     if (!user) {
         throw new Unauthorized("Not authorized");
     }
-    const { email, subscription } = user;
+    // const { email, subscription } = user; //??
 
     res.status(200).json({
         // status: "success",
         code: 200,
-        user: {
-            email,
-            subscription
-        }
+        user,
+        // user: {
+        //     email,
+        //     subscription
+        // }, //??
     })
 };
 
