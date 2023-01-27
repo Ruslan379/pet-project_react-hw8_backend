@@ -6,6 +6,6 @@ COPY . .
 
 RUN npm install
 
-EXPOSE 3001
+EXPOSE 3000
 
-CMD ["cross-env", "NODE_ENV=development", "nodemon", "./server.js"]
+CMD ["nodemon", "server.js"]
