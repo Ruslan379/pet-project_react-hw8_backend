@@ -2,10 +2,14 @@ FROM node
 
 WORKDIR /app
 
-COPY . .
+COPY package.json /app
 
 RUN npm install
 
-EXPOSE 3000
+COPY . .
 
-CMD ["nodemon", "server.js"]
+ENV PORT 3000
+
+EXPOSE $PORT
+
+CMD ["npm", "start"]
