@@ -17,7 +17,10 @@ const sendVerificationEmailSendGrid = async (data) => {
         //     html: '<h1>...and easy to do anywhere, even with Node.js and SendGrid</h1>',
         // };
         const msg = { ...data, from: SENDGRID_EMAIL }
-        await sgMail.send(msg);
+        const info = await sgMail.send(msg);
+        console.log("");
+        console.log("info:".bgCyan.black, info);
+        console.log("");
         console.log("Email send using SendGrid success!".bgGreen.black);
         console.log("");
         return true;
