@@ -54,9 +54,9 @@ const authMiddleware = async (req, res, next) => {
         //! Проверка user и валидности его токена
         if (!user || !user.token) {
             throw new Unauthorized("Not authorized. Invalid user token");
-        }
+        };
+        //! Добавляем объект user в объект запроса req.user
         req.user = user;
-        // req.token = token; //! только для (1-вариант)
         next();
     } catch (error) {
         console.log(error.message);
