@@ -18,7 +18,7 @@ const validateMiddlewarePatchFavorite = validation(contactJoiSchemaPatchFavorite
 
 //-----------------------------------------------------------------------------
 //! 0. Проверка токена
-router.use(authMiddleware);
+// router.use(authMiddleware);
 
 //! 1. Получение списка ВСЕХ КОНТАКТОВ
 // router.get("/", controllerWrapper(ctrl.getAllContacts));
