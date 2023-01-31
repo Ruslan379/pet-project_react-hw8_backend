@@ -48,6 +48,7 @@ const authMiddleware = async (req, res, next) => {
         }
         //! Весь объект user (2-вариант)
         const { id } = jwt.verify(token, JWT_SECRET);
+        console.log("authMiddleware-->id:".bgYellow.blue, id); //!
         user = await User.findById(id);
         // console.log("authMiddleware-->user(User.findById):".bgYellow.blue, user); //!
 
@@ -55,8 +56,9 @@ const authMiddleware = async (req, res, next) => {
         if (!user || !user.token) {
             throw new Unauthorized("Not authorized. Invalid user token");
         };
-        //! Добавляем объект user в объект запроса req.user
+        //! Добавляем ВЕСЬ объект {user} в объект запроса req.user
         req.user = user;
+        req.idUser = id; // это для ТЕСТА (в коде не нужно)
         next();
     } catch (error) {
         console.log(error.message);

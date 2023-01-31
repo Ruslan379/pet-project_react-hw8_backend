@@ -10,16 +10,21 @@ const { lineBreak } = require("../../services");
 const getAllContacts = async (req, res, next) => {
     // const contacts = await Contact.find({});
 
+    console.log("getAllContacts --> req.idUser:".bgYellow.black, req.idUser); // это для ТЕСТА (в коде не нужно)
+    const id = req.idUser; // это для ТЕСТА (в коде не нужно)
+    console.log("getAllContacts --> id=req.idUser:".bgYellow.black, id); // это для ТЕСТА (в коде не нужно)
+    lineBreak(); // это для ТЕСТА (в коде не нужно)
+
 
     const { id: userId } = req.user //?
     //* =============================console===================================
     console.log("");
-    console.log("getAllContacts-->req.user:".bgYellow.red);
+    console.log("getAllContacts --> req.user:".bgYellow.red);
     // console.table(req.user); 
     // console.table([req.user]);
     console.log(req.user);
 
-    console.log("getAllContacts-->userId:".bgYellow.blue, userId.bgGreen.blue);
+    console.log("getAllContacts --> userId:".bgYellow.blue, userId.bgGreen.blue);
     console.log("");
     //* =======================================================================
 
@@ -47,6 +52,7 @@ const getAllContacts = async (req, res, next) => {
     // const contacts = await Contact.find({ owner: userId }); //*
     //? Пагинация
     // const contacts = await Contact.find({ owner: userId, skip, limit: Number(limit) }) //! так не работает, если в server.js есть строчка: mongoose.set('strictQuery', false); 
+    // const contacts = await Contact.find({ owner: id }) // это для ТЕСТА (в коде не нужно)
     const contacts = await Contact.find({ owner: userId })
         .select({ createdAt: 0 })   //! не показывать поле "createdAt"
         .skip(skip)   //! с какого элемента массива (объекта) начать показ
