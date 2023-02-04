@@ -86,7 +86,8 @@ const registrationController = async (req, res) => {
         // from: SENDGRID_EMAIL, //? Use the email address or domain you verified above
         subject: 'Подтверждение регистрации на сайте_25-4',
         // text: '...and easy to do anywhere, even with Node.js and Nodemailer',
-        html: `<a href = "http://localhost:3000/api/users/verify/${verificationToken}" target="_blank">Нажмите для подтверждения вашего EMAIL</a>`,
+        // html: `<a href = "http://localhost:3000/api/users/verify/${verificationToken}" target="_blank">Нажмите для подтверждения вашего EMAIL</a>`,
+        html: `<a href = "https://contact-book-backend52.onrender.com/api/users/verify/${verificationToken}" target="_blank">Нажмите для подтверждения вашего EMAIL</a>`,
     };
 
     //? ------------------ SendGrid -------------------
