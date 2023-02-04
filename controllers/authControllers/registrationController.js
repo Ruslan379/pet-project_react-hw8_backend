@@ -55,7 +55,10 @@ const registrationController = async (req, res) => {
     // const newUser = await User.create({ email, password: hashPassword }); 
 
     //* gravatar
-    const avatarURL = gravatar.url(email);
+    // const avatarURL = gravatar.url(email);
+    // const avatarURL = gravatar.url(email, { protocol: 'https', d: 'retro' });
+    // const avatarURL = gravatar.url(email, { protocol: 'https', s: '32', d: 'retro' });
+    const avatarURL = gravatar.url(email, { protocol: 'https', d: 'robohash' });
 
     //? ------------------- SendGrid -------------------
     //todo ------------------- Nodemailer -------------------
@@ -84,7 +87,7 @@ const registrationController = async (req, res) => {
         to: email,
         // from: META_EMAIL, //? Use the email address or domain you verified above
         // from: SENDGRID_EMAIL, //? Use the email address or domain you verified above
-        subject: 'Подтверждение регистрации на сайте_25-4',
+        subject: 'Подтверждение регистрации вашего EMAIL на сайте Contacts BOOK',
         // text: '...and easy to do anywhere, even with Node.js and Nodemailer',
         // html: `<a href = "http://localhost:3000/api/users/verify/${verificationToken}" target="_blank">Нажмите для подтверждения вашего EMAIL</a>`,
         html: `<a href = "https://contact-book-backend52.onrender.com/api/users/verify/${verificationToken}" target="_blank">Нажмите для подтверждения вашего EMAIL</a>`,
