@@ -110,9 +110,15 @@ const updateAvatar = async (req, res) => {
         // await fs.rename(tempUpload, avatarTempURL); //???? 1-var - не перезаписывает Jimp-файлу аватара
         // await fs.rename(avatarTempURL, resultUpload); //? 1-var
 
-        //! ОТНОСИТЕЛЬНЫЙ путь к новому Jimp-файлу аватара в папке назначения
-        const avatarURL = path.join("public", "avatars", avatarNewJimpName);
-        console.log("ОТНОСИТЕЛЬНЫЙ путь к новому Jimp-файлу аватара в папке назначения -> avatarURL:".bgGreen.black, avatarURL.green); //!;
+        //todo ОТНОСИТЕЛЬНЫЙ путь к новому Jimp-файлу аватара в папке назначения --> OLD 
+        // const avatarURL = path.join("public", "avatars", avatarNewJimpName);
+        // console.log("ОТНОСИТЕЛЬНЫЙ путь к новому Jimp-файлу аватара в папке назначения -> avatarURL:".bgGreen.black, avatarURL.green); //!;
+        // console.log("");
+
+        //! АСОЛЮТНЫЙ (ПОЛНЫЙ) путь к новому Jimp-файлу аватара в папке назначения 
+        const BASE_URL = 'https://contact-book-backend52.onrender.com/';
+        const avatarURL = path.join(BASE_URL, "public", "avatars", avatarNewJimpName);
+        console.log("АСОЛЮТНЫЙ (ПОЛНЫЙ) путь к новому Jimp-файлу аватара в папке назначения -> avatarURL:".bgGreen.black, avatarURL.green); //!;
         console.log("");
 
 
