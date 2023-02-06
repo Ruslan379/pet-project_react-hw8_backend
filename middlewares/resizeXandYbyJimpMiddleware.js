@@ -1,7 +1,7 @@
 const { changeImageByJimp } = require("../helpers")
 
 const {
-    resize400ByJimp,
+    resizeXandYbyJimp,
     resize250Qual60ByJimp,
     resize250GreyByJimp,
     resize250Qual60GreyByJimp
@@ -12,7 +12,7 @@ const fs = require("fs/promises");
 
 
 //----------------------------------------------------------------
-const resize250Qual60GreyByJimpMiddleware = async (req, res, next) => {
+const resizeXandYbyJimpMiddleware = async (req, res, next) => {
     console.log("");
 
     const { path: tempUpload, destination, originalname } = req.file;
@@ -24,10 +24,13 @@ const resize250Qual60GreyByJimpMiddleware = async (req, res, next) => {
     console.log("ПОЛНЫЙ путь к ориг. файлу аватара во временной папке tmp -> tempUpload:".bgBlue, tempUpload.red); //!;
     console.log("");
 
+    const x = 50; //! ширина Jimp-файла аватарки
+    const y = 50; //! высота Jimp-файла аватарки
+
     // await resize400ByJimp(tempUpload);
     // await resize250Qual60ByJimp(tempUpload);
     // await resize250GreyByJimp(tempUpload);
-    await resize250Qual60GreyByJimp(tempUpload);
+    await resizeXandYbyJimp(tempUpload, x, y);
 
     //* ----------- ПЕРЕИМЕННОВАНИЕ файла аватарки в файл Jimp1_<оригинальное имя файла> -------------
     // //! Новое имя Jimp-файла аватарки
@@ -47,6 +50,6 @@ const resize250Qual60GreyByJimpMiddleware = async (req, res, next) => {
     next();
 };
 
-module.exports = resize250Qual60GreyByJimpMiddleware;
+module.exports = resizeXandYbyJimpMiddleware;
 
-// jimpResize250QualBWMiddleware --> resize250Qual60GreyByJimpMiddleware
+// resize250Qual60GreyByJimpMiddleware --> resizeXandYbyJimpMiddleware

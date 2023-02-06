@@ -8,7 +8,7 @@ const { v4: uuidV4 } = require('uuid')
 const {
     controllerWrapper,
     authMiddleware,
-    resize250Qual60GreyByJimpMiddleware
+    resizeXandYbyJimpMiddleware
 } = require("../../middlewares")
 
 const { filesControllers: ctrl } = require("../../controllers")
@@ -91,7 +91,7 @@ const uploadMiddleware = multer({ storage });
 router.post(
     "/upload",
     uploadMiddleware.single("avatar"),
-    resize250Qual60GreyByJimpMiddleware,
+    resizeXandYbyJimpMiddleware,
     controllerWrapper(ctrl.uploadController)
 )
 

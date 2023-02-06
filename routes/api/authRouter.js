@@ -6,7 +6,7 @@ const {
     controllerWrapper,
     authMiddleware,
     uploadMiddleware,
-    resize250Qual60GreyByJimpMiddleware
+    resizeXandYbyJimpMiddleware
 } = require("../../middlewares");
 
 const { authControllers: ctrl } = require("../../controllers")
@@ -55,7 +55,7 @@ router.patch(
     "/avatars",
     authMiddleware,
     uploadMiddleware.single("avatar"),
-    resize250Qual60GreyByJimpMiddleware,
+    resizeXandYbyJimpMiddleware,
     controllerWrapper(ctrl.updateAvatar)
 );
 

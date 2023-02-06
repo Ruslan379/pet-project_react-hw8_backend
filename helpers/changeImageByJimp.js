@@ -3,10 +3,10 @@ const Jimp = require('jimp');
 // resizeAvatarJimp-файл --> changeImageByJimp
 // resizeAvatarJimp-функция --> resize250Qual60GreyByJimp
 
-async function resize400ByJimp(tempUpload) {
+async function resizeXandYbyJimp(tempUpload, x, y) {
     const image = await Jimp.read(tempUpload);
     await image
-        .resize(400, 400)
+        .resize(x, y)
         // .quality(60) // set JPEG quality
         // .greyscale() // set greyscale
         .writeAsync(tempUpload); //! записывает ИЗМЕНЕННЫЙ аватар-image под ТЕМ ЖЕ ИМЕНЕМ во временную папку E:\GoIT\Code\goit-node-hw-05\tmp\
@@ -40,7 +40,7 @@ async function resize250Qual60GreyByJimp(tempUpload) {
 };
 
 module.exports = {
-    resize400ByJimp,
+    resizeXandYbyJimp,
     resize250Qual60ByJimp,
     resize250GreyByJimp,
     resize250Qual60GreyByJimp,
