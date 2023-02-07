@@ -110,18 +110,21 @@ const updateAvatar = async (req, res) => {
         // await fs.rename(tempUpload, avatarTempURL); //???? 1-var - не перезаписывает Jimp-файлу аватара
         // await fs.rename(avatarTempURL, resultUpload); //? 1-var
 
-        //todo ОТНОСИТЕЛЬНЫЙ путь к новому Jimp-файлу аватара в папке назначения --> OLD 
+        //todo-1 ОТНОСИТЕЛЬНЫЙ путь к новому Jimp-файлу аватара в папке назначения --> OLD-1
         // const avatarURL = path.join("public", "avatars", avatarNewJimpName);
         // console.log("ОТНОСИТЕЛЬНЫЙ путь к новому Jimp-файлу аватара в папке назначения -> avatarURL:".bgGreen.black, avatarURL.green); //!;
         // console.log("");
 
-        //! АСОЛЮТНЫЙ (ПОЛНЫЙ) путь к новому Jimp-файлу аватара в папке назначения 
+        //todo-2 АСОЛЮТНЫЙ (ПОЛНЫЙ) путь к новому Jimp-файлу аватара в папке назначения --> OLD-2
         const BASE_URL = 'https://contact-book-backend52.onrender.com';
         // const avatarURL = path.join(BASE_URL, "public", "avatars", avatarNewJimpName);
         // console.log("АСОЛЮТНЫЙ (ПОЛНЫЙ) путь к новому Jimp-файлу аватара в папке назначения -> avatarURL:".bgGreen.black, avatarURL.green); //!;
         // console.log("");
 
+        //! АСОЛЮТНЫЙ (ПОЛНЫЙ) путь к новому Jimp-файлу аватара в папке назначения - вариант Юрия Довжика
         const avatarURL = `${BASE_URL}/static/avatars/${avatarNewJimpName}`; //?
+        console.log("АСОЛЮТНЫЙ (ПОЛНЫЙ) путь к новому Jimp-файлу аватара в папке назначения -> avatarURL:".bgGreen.black, avatarURL.green); //!;
+        console.log("");
 
         await User.findByIdAndUpdate(req.user._id, { avatarURL });
         // await User.findByIdAndUpdate(req.user._id, { avatarURL }, { new: true });

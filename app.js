@@ -29,6 +29,7 @@ const FILE_DIR = path.resolve("./public/output")
 // app.use("/", express.static("public"));
 // app.use("/public", express.static("public"));
 // app.use("/public/avatars", express.static("public/avatars"));
+//! вариант Юрия Довжика
 app.use('/static', express.static('public')); //? 
 
 //! 1-вариант --> в filesRouter.js --> router.use("/download", express.static(FILE_DIR))
