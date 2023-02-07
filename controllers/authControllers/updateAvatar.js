@@ -117,10 +117,11 @@ const updateAvatar = async (req, res) => {
 
         //! АСОЛЮТНЫЙ (ПОЛНЫЙ) путь к новому Jimp-файлу аватара в папке назначения 
         const BASE_URL = 'https://contact-book-backend52.onrender.com/';
-        const avatarURL = path.join(BASE_URL, "public", "avatars", avatarNewJimpName);
-        console.log("АСОЛЮТНЫЙ (ПОЛНЫЙ) путь к новому Jimp-файлу аватара в папке назначения -> avatarURL:".bgGreen.black, avatarURL.green); //!;
-        console.log("");
+        // const avatarURL = path.join(BASE_URL, "public", "avatars", avatarNewJimpName);
+        // console.log("АСОЛЮТНЫЙ (ПОЛНЫЙ) путь к новому Jimp-файлу аватара в папке назначения -> avatarURL:".bgGreen.black, avatarURL.green); //!;
+        // console.log("");
 
+        const avatarURL = `${BASE_URL}/static/avatars/${avatarNewJimpName}`; //?
 
         await User.findByIdAndUpdate(req.user._id, { avatarURL });
         // await User.findByIdAndUpdate(req.user._id, { avatarURL }, { new: true });
