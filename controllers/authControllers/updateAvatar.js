@@ -116,7 +116,7 @@ const updateAvatar = async (req, res) => {
         // console.log("");
 
         //! АСОЛЮТНЫЙ (ПОЛНЫЙ) путь к новому Jimp-файлу аватара в папке назначения 
-        const BASE_URL = 'https://contact-book-backend52.onrender.com/';
+        const BASE_URL = 'https://contact-book-backend52.onrender.com';
         // const avatarURL = path.join(BASE_URL, "public", "avatars", avatarNewJimpName);
         // console.log("АСОЛЮТНЫЙ (ПОЛНЫЙ) путь к новому Jimp-файлу аватара в папке назначения -> avatarURL:".bgGreen.black, avatarURL.green); //!;
         // console.log("");
