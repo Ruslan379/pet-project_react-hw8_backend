@@ -5,8 +5,8 @@ const fs = require("fs/promises");
 const { lineBreak } = require("../../services");
 
 //!firebase
-const { storage } = require("../../firebase/config.js");
-const { ref, uploadBytes, getDownloadURL } = require("firebase/storage");
+// const { storage } = require("../../firebase/config.js");
+// const { ref, uploadBytes, getDownloadURL } = require("firebase/storage");
 
 
 //--------------------------------------------------------------------------------------------
