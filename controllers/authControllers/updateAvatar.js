@@ -43,9 +43,13 @@ const updateAvatar = async (req, res) => {
 
     try {
         //? ПОЛНЫЙ путь к новому Jimp-файлу аватара в папке назначения
-        // const resultUpload = path.join(avatarsDir, avatarNewJimpName);
-        // console.log("ПОЛНЫЙ путь к новому Jimp-файлу аватара в папке назначения -> resultUpload:".bgCyan.black, resultUpload.red); //!;
-        // console.log("");
+        const resultUpload = path.join(avatarsDir, avatarNewJimpName);
+        console.log("ПОЛНЫЙ путь к новому Jimp-файлу аватара в папке назначения -> resultUpload:".bgCyan.black, resultUpload.red); //!;
+        console.log("");
+
+
+        //? ПЕРЕИМЕНОВАНИЕ и ПЕРЕМЕЩЕНИЕ файла аватара с временной папки tmp в папку назначения E:\GoIT\Code\goit-node-hw-05\public\avatars
+        await fs.rename(tempUpload, resultUpload);
 
 
         //? АСОЛЮТНЫЙ (ПОЛНЫЙ) путь к новому Jimp-файлу аватара в папке назначения - вариант Юрия Довжика
@@ -67,11 +71,10 @@ const updateAvatar = async (req, res) => {
         // console.log("");
         //!++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-        //? ПЕРЕИМЕНОВАНИЕ и ПЕРЕМЕЩЕНИЕ файла аватара с временной папки tmp в папку назначения E:\GoIT\Code\goit-node-hw-05\public\avatars
-        // await fs.rename(tempUpload, resultUpload);
+
 
         //! УДАЛЕНИЕ файла аватара с временной папки tmp
-        await fs.unlink(tempUpload);
+        // await fs.unlink(tempUpload);
 
         //! ЗАПИСЬ ссылки на файла аватара 
         await User.findByIdAndUpdate(req.user._id, { avatarURL });

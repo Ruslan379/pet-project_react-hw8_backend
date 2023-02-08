@@ -26,10 +26,10 @@ const FILE_DIR = path.resolve("./public/output")
 
 //! serve static
 // app.use("/", express.static("public"));
-// app.use("/public", express.static("public"));
+app.use("/public", express.static("public")); //! мой
 // app.use("/public/avatars", express.static("public/avatars"));
 //! вариант Юрия Довжика
-app.use('/static', express.static('public')); //? 
+// app.use('/static', express.static('public')); //? 
 
 
 //!+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
