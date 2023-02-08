@@ -2,6 +2,8 @@ const { User } = require("../../models");
 const path = require("path");
 const fs = require("fs/promises");
 
+const { lineBreak } = require("../../services");
+
 //!firebase
 const { storage } = require("../../firebase/config.js");
 const { ref, uploadBytes, getDownloadURL } = require("firebase/storage");
@@ -19,6 +21,7 @@ const updateAvatar = async (req, res) => {
     const { id: userId } = req.user
     console.log("");
 
+    lineBreak();
     const { path: tempUpload, destination, originalname } = req.file;
     console.log("ОБЪЕКТ -> req.file:".red, req.file); //!;
     console.log("");
@@ -26,9 +29,7 @@ const updateAvatar = async (req, res) => {
     console.log("");
     console.log("ПОЛНЫЙ путь к ориг. файлу аватара во временной папке tmp -> tempUpload:".bgBlue, tempUpload.red); //!;
     console.log("");
-
-
-    console.log("____________________________________________");
+    lineBreak();
 
     //----------------------------------------------------------------------------
     //! ПЕРЕИМЕНОВАНИЕ файла аватара
@@ -42,9 +43,9 @@ const updateAvatar = async (req, res) => {
 
     try {
         //? ПОЛНЫЙ путь к новому Jimp-файлу аватара в папке назначения
-        const resultUpload = path.join(avatarsDir, avatarNewJimpName);
-        console.log("ПОЛНЫЙ путь к новому Jimp-файлу аватара в папке назначения -> resultUpload:".bgCyan.black, resultUpload.red); //!;
-        console.log("");
+        // const resultUpload = path.join(avatarsDir, avatarNewJimpName);
+        // console.log("ПОЛНЫЙ путь к новому Jimp-файлу аватара в папке назначения -> resultUpload:".bgCyan.black, resultUpload.red); //!;
+        // console.log("");
 
 
         //? АСОЛЮТНЫЙ (ПОЛНЫЙ) путь к новому Jimp-файлу аватара в папке назначения - вариант Юрия Довжика
@@ -72,7 +73,7 @@ const updateAvatar = async (req, res) => {
         //! УДАЛЕНИЕ файла аватара с временной папки tmp
         await fs.unlink(tempUpload);
 
-
+        //! ЗАПИСЬ ссылки на файла аватара 
         await User.findByIdAndUpdate(req.user._id, { avatarURL });
         // await User.findByIdAndUpdate(req.user._id, { avatarURL }, { new: true });
 
