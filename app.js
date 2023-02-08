@@ -7,8 +7,7 @@ const path = require('path')
 
 const authRouter = require('./routes/api/authRouter.js');
 const contactsRouter = require('./routes/api/contactsRouter');
-// const usersRouter = require('./routes/api/usersRouter');
-const filesRouter = require('./routes/api/filesRouter');
+
 
 //----------------------------------------------------------------
 const app = express()
@@ -32,15 +31,11 @@ const FILE_DIR = path.resolve("./public/output")
 //! вариант Юрия Довжика
 app.use('/static', express.static('public')); //? 
 
-//! 1-вариант --> в filesRouter.js --> router.use("/download", express.static(FILE_DIR))
-// app.use("/api/files/download", express.static(FILE_DIR)) //! 2-вариант 
 
-//! files
-app.use('/api/files', filesRouter)
 //!+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
-// app.use('/api/users/current', usersRouter)
+
 app.use('/api/users', authRouter)
 app.use('/api/contacts', contactsRouter)
 
