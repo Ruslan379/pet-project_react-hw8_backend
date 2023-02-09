@@ -82,10 +82,10 @@ const updateAvatar = async (req, res) => {
 
 
         //? АСОЛЮТНЫЙ (ПОЛНЫЙ) путь к новому Jimp-файлу аватара в папке назначения - вариант Юрия Довжика
-        const BASE_URL = 'https://contact-book-backend52.onrender.com';
-        const avatarURL = `${BASE_URL}/static/avatars/${avatarNewJimpName}`; //?
-        console.log("АСОЛЮТНЫЙ (ПОЛНЫЙ) путь к новому Jimp-файлу аватара в папке назначения -> avatarURL:".bgGreen.black, avatarURL.green); //!;
-        console.log("");
+        // const BASE_URL = 'https://contact-book-backend52.onrender.com';
+        // const avatarURL = `${BASE_URL}/static/avatars/${avatarNewJimpName}`; //?
+        // console.log("АСОЛЮТНЫЙ (ПОЛНЫЙ) путь к новому Jimp-файлу аватара в папке назначения -> avatarURL:".bgGreen.black, avatarURL.green); //!;
+        // console.log("");
 
 
         //!++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
