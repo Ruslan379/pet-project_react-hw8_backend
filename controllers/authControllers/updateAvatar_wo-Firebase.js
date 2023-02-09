@@ -3,8 +3,8 @@ const path = require("path");
 const fs = require("fs/promises");
 
 //!firebase
-const { storage } = require("../../firebase/config.js");
-const { ref, uploadBytes, getDownloadURL } = require("firebase/storage");
+// const { storage } = require("../../firebase/config.js");
+// const { ref, uploadBytes, getDownloadURL } = require("firebase/storage");
 
 
 //--------------------------------------------------------------------------------------------
