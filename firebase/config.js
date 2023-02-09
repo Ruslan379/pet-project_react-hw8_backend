@@ -9,8 +9,24 @@ const { getStorage } = require("firebase/storage");
 const { getFirestore } = require("firebase/firestore");
 
 
+const {
+  apiKey,
+  authDomain,
+  projectId,
+  storageBucket,
+  messagingSenderId,
+  appId
+} = process.env;
+
 //! Your web app's Firebase configuration
-const { firebaseConfig } = process.env;
+const firebaseConfig = {
+  apiKey,
+  authDomain,
+  projectId,
+  storageBucket,
+  messagingSenderId,
+  appId
+};
 
 
 //! Initialize Firebase
@@ -35,13 +51,4 @@ module.exports = {
 
 
 
-
-//-----------------------------------------------------------------
 //todo   https://blog.logrocket.com/integrating-firebase-authentication-expo-mobile-app/
-
-//? Initialize Firebase
-// export const app = initializeApp(firebaseConfig);
-// export default app;
-
-
-//-----------------------------------------------------------------
