@@ -35,7 +35,7 @@ const { ref, uploadBytes, getDownloadURL, getBlob } = require("firebase/storage"
 
 const fetch = require("node-fetch");
 
-// const { Buffer, Blob } = require('buffer'); //?
+const { Buffer, Blob } = require('buffer'); //?
 
 
 //--------------------------------------------------------------------------------------------
@@ -82,22 +82,31 @@ const updateAvatar = async (req, res) => {
     console.log("final_img:".bgGreen.black, final_img); //!;
     console.log("");
 
+    //!  Получаем строку-файл АВАТАРКИ из объекта avatarImage
+    // const image = req.user.avatarImage.image;
+    // console.log("req.user.avatarImage.image_ДО:".bgRed.black, image); //!;
+    // console.log("");
+
     //! Записываем файл АВАТАРКИ в MongoDB в объект avatarImage
     await User.findByIdAndUpdate(req.user._id, { avatarImage: { ...final_img } });
 
-    //!  Получаем строку-файл АВАТАРКИ из объекта avatarImage
-    const image = req.user.avatarImage.image;
+    //! Получаем обновленного userUpdate
+    const userUpdate = await User.findOne(req.user._id);
+    // console.log("userUpdate:".bgBlue.black, userUpdate); //!;
+    const imageUpdate = userUpdate.avatarImage.image;
+    // console.log("userUpdate.avatarImage.image:".bgBlue.black, imageNew); //!;
+    // console.log("");
 
     //! Получение АБСОЛЮТНОЙ ссылки avatarURL на файл АВАТАРКИ
-    const avatarURL = 'data:image/png;base64,' + Buffer.from(image).toString('base64');
+    const avatarURL = 'data:image/png;base64,' + Buffer.from(imageUpdate).toString('base64');
     console.log("avatarURL:".bgGreen.black, avatarURL.green); //!;
     console.log("");
 
     //! ЗАПИСЬ ссылки avatarURL на файл АВАТАРКИ
     await User.findByIdAndUpdate(req.user._id, { avatarURL });
-
-
     //! ++++++++++++++++++++++++++++++++++++ Запись файла АВАТАРКИ в mongoDB +++++++++++++++++++++++++++++++++++++
+
+
 
     try {
         //? ПОЛНЫЙ путь к новому Jimp-файлу аватара в папке назначения
@@ -152,7 +161,6 @@ const updateAvatar = async (req, res) => {
         //!++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
-
         //! УДАЛЕНИЕ файла аватара с временной папки tmp
         // await fs.unlink(tempUpload); //todo 1
         fs.unlinkSync(tempUpload); //todo 2
@@ -160,8 +168,6 @@ const updateAvatar = async (req, res) => {
         //! ЗАПИСЬ  в ---> avatarURL2 ссылки ссылки на файл АВАТАРКИ с Firebase Storage без обработки
         await User.findByIdAndUpdate(req.user._id, { avatarURL2 });
         // await User.findByIdAndUpdate(req.user._id, { avatarURL2 }, { new: true });
-
-
 
 
         //* ОТВЕТ

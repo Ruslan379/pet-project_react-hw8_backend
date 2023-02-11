@@ -34,9 +34,14 @@ const userSchema = Schema({
         default: null,
     },
     avatarImage: {
-        image: Buffer,
-        contentType: String,
-        // default: null,
+        image: {
+            type: Buffer,
+            default: null,
+        },
+        contentType: {
+            type: String,
+            default: "none",
+        },
     },
     avatarURL: {
         type: String,
@@ -48,6 +53,7 @@ const userSchema = Schema({
         // required: [true, 'Avatar is required'],
         default: "default",
     },
+
     verify: {
         type: Boolean,
         default: false,
@@ -56,6 +62,7 @@ const userSchema = Schema({
         type: String,
         required: [true, 'Verify token is required'],
     },
+
 }, { versionKey: false, timestamps: true });
 
 
