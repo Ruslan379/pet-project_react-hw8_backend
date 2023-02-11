@@ -33,10 +33,20 @@ const userSchema = Schema({
         type: String,
         default: null,
     },
+    avatarImage: {
+        image: Buffer,
+        contentType: String,
+        // default: null,
+    },
     avatarURL: {
         type: String,
         required: [true, 'Avatar is required'],
         // default: null,
+    },
+    avatarURL2: {
+        type: String,
+        // required: [true, 'Avatar is required'],
+        default: "default",
     },
     verify: {
         type: Boolean,

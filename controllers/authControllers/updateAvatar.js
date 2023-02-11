@@ -1,6 +1,7 @@
 const { User } = require("../../models");
 const path = require("path");
-const fs = require("fs/promises");
+// const fs = require("fs/promises"); //todo 1
+const fs = require("fs"); //todo 2
 
 const { lineBreak } = require("../../services");
 
@@ -34,7 +35,7 @@ const { ref, uploadBytes, getDownloadURL, getBlob } = require("firebase/storage"
 
 const fetch = require("node-fetch");
 
-const { Buffer, Blob } = require('buffer');
+// const { Buffer, Blob } = require('buffer'); //?
 
 
 //--------------------------------------------------------------------------------------------
@@ -58,16 +59,47 @@ const updateAvatar = async (req, res) => {
     console.log("ПОЛНЫЙ путь к ориг. файлу аватара во временной папке tmp -> tempUpload:".bgBlue, tempUpload.red); //!;
     console.log("");
     lineBreak();
-
-    //----------------------------------------------------------------------------
-    //! ПЕРЕИМЕНОВАНИЕ файла аватара
     console.log("");
+    //----------------------------------------------------------------------------
+
+    //! ПЕРЕИМЕНОВАНИЕ файла аватара
     // const avatarNewJimpName = `Jimp_${userId}_${originalname}`; //?
     const [filename, extension] = originalname.split(".");
     const avatarNewJimpName = `${userId}.${extension}`;
     console.log("avatarNewJimpName:".bgMagenta, avatarNewJimpName.bgGreen.red); //!;
     console.log("");
 
+
+    //! ++++++++++++++++++++++++++++++++++++ Запись АВАТАР в mongoDB +++++++++++++++++++++++++++++++++++++
+    const img = fs.readFileSync(tempUpload, 'base64');
+    console.log("img:".bgGreen.black, img); //!;
+    console.log();
+
+    const final_img = {
+        contentType: req.file.mimetype,
+        image: Buffer.from(img, 'base64')
+    };
+    console.log("final_img:".bgGreen.black, final_img); //!;
+    console.log("");
+
+    //! Записываем файл АВАТАРКИ в MongoDB в объекта avatarImage
+    await User.findByIdAndUpdate(req.user._id, { avatarImage: { ...final_img } });
+
+    //!  Получаем строку-файл АВАТАРКИ из объекта avatarImage
+    const image = req.user.avatarImage.image;
+
+
+
+    //! Получение АБСОЛЮТНОЙ ссылки avatarURL2 на файл АВАТАРКИ
+    const avatarURL2 = 'data:image/png;base64,' + Buffer.from(image).toString('base64');
+    console.log("avatarURL2:".bgGreen.black, avatarURL2.green); //!;
+    console.log("");
+
+    //! ЗАПИСЬ ссылки avatarURL и avatarURL2 на файл аватара
+    await User.findByIdAndUpdate(req.user._id, { avatarURL2 });
+
+
+    //! ++++++++++++++++++++++++++++++++++++ Запись АВАТАР в mongoDB +++++++++++++++++++++++++++++++++++++
 
     try {
         //? ПОЛНЫЙ путь к новому Jimp-файлу аватара в папке назначения
@@ -124,18 +156,22 @@ const updateAvatar = async (req, res) => {
 
 
         //! УДАЛЕНИЕ файла аватара с временной папки tmp
-        await fs.unlink(tempUpload);
+        // await fs.unlink(tempUpload); //todo 1
+        fs.unlinkSync(tempUpload); //todo 2
 
-        //! ЗАПИСЬ ссылки на файла аватара 
+        //! ЗАПИСЬ ссылки avatarURL на файл аватара
         await User.findByIdAndUpdate(req.user._id, { avatarURL });
         // await User.findByIdAndUpdate(req.user._id, { avatarURL }, { new: true });
 
 
+
+
         //* ОТВЕТ
-        res.json({ avatarURL });
+        res.json({ avatarURL, avatarURL2 });
 
     } catch (error) {
-        await fs.unlink(tempUpload);
+        // await fs.unlink(tempUpload); //todo 1
+        fs.unlinkSync(tempUpload); //todo 2
         throw error;
     }
 };
