@@ -62,7 +62,7 @@ const updateAvatar = async (req, res) => {
     console.log("");
     //----------------------------------------------------------------------------
 
-    //! ПЕРЕИМЕНОВАНИЕ файла аватара
+    //! ПЕРЕИМЕНОВАНИЕ файла АВАТАРКИ (пока не используется)
     // const avatarNewJimpName = `Jimp_${userId}_${originalname}`; //?
     const [filename, extension] = originalname.split(".");
     const avatarNewJimpName = `${userId}.${extension}`;
@@ -70,7 +70,7 @@ const updateAvatar = async (req, res) => {
     console.log("");
 
 
-    //! ++++++++++++++++++++++++++++++++++++ Запись АВАТАР в mongoDB +++++++++++++++++++++++++++++++++++++
+    //! ++++++++++++++++++++++++++++++++++++ Запись файла АВАТАРКИ в mongoDB +++++++++++++++++++++++++++++++++++++
     const img = fs.readFileSync(tempUpload, 'base64');
     console.log("img:".bgGreen.black, img); //!;
     console.log();
@@ -82,24 +82,22 @@ const updateAvatar = async (req, res) => {
     console.log("final_img:".bgGreen.black, final_img); //!;
     console.log("");
 
-    //! Записываем файл АВАТАРКИ в MongoDB в объекта avatarImage
+    //! Записываем файл АВАТАРКИ в MongoDB в объект avatarImage
     await User.findByIdAndUpdate(req.user._id, { avatarImage: { ...final_img } });
 
     //!  Получаем строку-файл АВАТАРКИ из объекта avatarImage
     const image = req.user.avatarImage.image;
 
-
-
-    //! Получение АБСОЛЮТНОЙ ссылки avatarURL2 на файл АВАТАРКИ
-    const avatarURL2 = 'data:image/png;base64,' + Buffer.from(image).toString('base64');
-    console.log("avatarURL2:".bgGreen.black, avatarURL2.green); //!;
+    //! Получение АБСОЛЮТНОЙ ссылки avatarURL на файл АВАТАРКИ
+    const avatarURL = 'data:image/png;base64,' + Buffer.from(image).toString('base64');
+    console.log("avatarURL:".bgGreen.black, avatarURL.green); //!;
     console.log("");
 
-    //! ЗАПИСЬ ссылки avatarURL и avatarURL2 на файл аватара
-    await User.findByIdAndUpdate(req.user._id, { avatarURL2 });
+    //! ЗАПИСЬ ссылки avatarURL на файл АВАТАРКИ
+    await User.findByIdAndUpdate(req.user._id, { avatarURL });
 
 
-    //! ++++++++++++++++++++++++++++++++++++ Запись АВАТАР в mongoDB +++++++++++++++++++++++++++++++++++++
+    //! ++++++++++++++++++++++++++++++++++++ Запись файла АВАТАРКИ в mongoDB +++++++++++++++++++++++++++++++++++++
 
     try {
         //? ПОЛНЫЙ путь к новому Jimp-файлу аватара в папке назначения
@@ -114,13 +112,13 @@ const updateAvatar = async (req, res) => {
 
         //? АСОЛЮТНЫЙ (ПОЛНЫЙ) путь к новому Jimp-файлу аватара в папке назначения - вариант Юрия Довжика
         // const BASE_URL = 'https://contact-book-backend52.onrender.com';
-        // const avatarURL = `${BASE_URL}/static/avatars/${avatarNewJimpName}`; //?
-        // console.log("АСОЛЮТНЫЙ (ПОЛНЫЙ) путь к новому Jimp-файлу аватара в папке назначения -> avatarURL:".bgGreen.black, avatarURL.green); //!;
+        // const avatarURL2 = `${BASE_URL}/static/avatars/${avatarNewJimpName}`; //?
+        // console.log("АСОЛЮТНЫЙ (ПОЛНЫЙ) путь к новому Jimp-файлу аватара в папке назначения -> avatarURL2:".bgGreen.black, avatarURL2.green); //!;
         // console.log("");
 
 
         //!++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        //! Отправка АВАТАР на Storage
+        //! Отправка АВАТАР на Firebase Storage без обработки
         // const storageRef = ref(storage, `avatars/${avatarNewJimpName}`);
 
         // console.log("storageRef:".bgYellow.black, storageRef); //!
@@ -134,15 +132,15 @@ const updateAvatar = async (req, res) => {
         // await uploadBytes(storageRef, blob);
 
 
-        //! Получение АБСОЛЮТНОЙ ссылки на на АВАТАР
-        // const avatarURL = await getDownloadURL(ref(storage, `avatars/${avatarNewJimpName}`));
-        const avatarURL = await getDownloadURL(ref(storage, `avatars/${originalname}`));
-        console.log("АСОЛЮТНЫЙ (ПОЛНЫЙ) путь к новому Jimp-файлу аватара в папке назначения -> avatarURL:".bgGreen.black, avatarURL.green); //!;
+        //! Получение АБСОЛЮТНОЙ ссылки на файл АВАТАРКИ с Firebase Storage без обработки
+        // const avatarURL2 = await getDownloadURL(ref(storage, `avatars/${avatarNewJimpName}`));
+        const avatarURL2 = await getDownloadURL(ref(storage, `avatars/${originalname}`));
+        console.log("АСОЛЮТНЫЙ (ПОЛНЫЙ) путь к новому Jimp-файлу аватара в папке назначения -> avatarURL2:".bgGreen.black, avatarURL2.green); //!;
         console.log("");
 
         //! НЕ РАБОТАЕТ
         // //? ПЕРЕИМЕНОВАНИЕ файла аватара с временной папки tmp в папку назначения E:\GoIT\Code\goit-node-hw-05\public\avatars
-        // const resp = await fetch(avatarURL);
+        // const resp = await fetch(avatarURL2);
         // console.log("resp:".bgGreen.black, resp); //!
         // const file = await resp.blob(); //! 1- вариант
         // // const file = new Blob([resp]); //! 2- вариант (экперементальный)
@@ -159,9 +157,9 @@ const updateAvatar = async (req, res) => {
         // await fs.unlink(tempUpload); //todo 1
         fs.unlinkSync(tempUpload); //todo 2
 
-        //! ЗАПИСЬ ссылки avatarURL на файл аватара
-        await User.findByIdAndUpdate(req.user._id, { avatarURL });
-        // await User.findByIdAndUpdate(req.user._id, { avatarURL }, { new: true });
+        //! ЗАПИСЬ  в ---> avatarURL2 ссылки ссылки на файл АВАТАРКИ с Firebase Storage без обработки
+        await User.findByIdAndUpdate(req.user._id, { avatarURL2 });
+        // await User.findByIdAndUpdate(req.user._id, { avatarURL2 }, { new: true });
 
 
 
