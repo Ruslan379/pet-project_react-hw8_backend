@@ -87,10 +87,12 @@ const updateAvatar = async (req, res) => {
     // console.log("req.user.avatarImage.image_ДО:".bgRed.black, image); //!;
     // console.log("");
 
-    //! Записываем файл АВАТАРКИ в MongoDB в объект avatarImage
+    //? ----- !!! С ипользованием  поля avatarImage в MongoDB:
+    //! Записываем файл АВАТАРКИ в MongoDB в объект avatarImage 
     await User.findByIdAndUpdate(req.user._id, { avatarImage: { ...final_img } });
 
-    //! Получаем обновленного userUpdate
+    //? ----- !!! С ипользованием  поля avatarImage в MongoDB:
+    //! Получаем обновленного userUpdate 
     const userUpdate = await User.findOne(req.user._id);
     // console.log("userUpdate:".bgBlue.black, userUpdate); //!;
     const imageUpdate = userUpdate.avatarImage.image;
@@ -98,13 +100,15 @@ const updateAvatar = async (req, res) => {
     // console.log("");
 
     //! Получение АБСОЛЮТНОЙ ссылки avatarURL на файл АВАТАРКИ
-    const avatarURL = 'data:image/png;base64,' + Buffer.from(imageUpdate).toString('base64');
-    console.log("avatarURL:".bgGreen.black, avatarURL.green); //!;
+    // const avatarURL = 'data:image/png;base64,' + Buffer.from(imageUpdate).toString('base64'); //? ----- !!! С ипользованием  поля avatarImage в MongoDB:
+    const avatarURL = 'data:image/png;base64,' + Buffer.from(final_img.image).toString('base64'); //!* так, если не создавать в MongoDB поле avatarImage
+    console.log("АСОЛЮТНЫЙ (ПОЛНЫЙ) путь к новому Jimp-файлу АВАТАРКИ --> avatarURL:".bgGreen.black); //!;
+    console.log(avatarURL.green); //!;
     console.log("");
 
     //! ЗАПИСЬ ссылки avatarURL на файл АВАТАРКИ
     await User.findByIdAndUpdate(req.user._id, { avatarURL });
-    //! ++++++++++++++++++++++++++++++++++++ Запись файла АВАТАРКИ в mongoDB +++++++++++++++++++++++++++++++++++++
+    //! ____________________________________ Запись файла АВАТАРКИ в mongoDB ____________________________________
 
 
 
@@ -144,7 +148,7 @@ const updateAvatar = async (req, res) => {
         //! Получение АБСОЛЮТНОЙ ссылки на файл АВАТАРКИ с Firebase Storage без обработки
         // const avatarURL2 = await getDownloadURL(ref(storage, `avatars/${avatarNewJimpName}`));
         const avatarURL2 = await getDownloadURL(ref(storage, `avatars/${originalname}`));
-        console.log("АСОЛЮТНЫЙ (ПОЛНЫЙ) путь к новому Jimp-файлу аватара в папке назначения -> avatarURL2:".bgGreen.black, avatarURL2.green); //!;
+        console.log("АСОЛЮТНЫЙ (ПОЛНЫЙ) путь к новому Jimp-файлу АВАТАРКИ --> avatarURL2:".bgGreen.black, avatarURL2.green); //!;
         console.log("");
 
         //! НЕ РАБОТАЕТ
